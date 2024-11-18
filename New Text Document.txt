@@ -1,0 +1,77 @@
+  **********Mongodb Methods***********
+
+
+*InsertOne()
+*InsertMany()
+*Upsert
+
+db.posts.updateOne({title: 'blog 1'}, {$set :{likes:10}});
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+Atlas atlas-yxzrg2-shard-0 [primary] test> db.posts.find();
+[
+  {
+    _id: ObjectId('67350241b510456840ded14b'),
+    id: 0,
+    title: 'blog 1',
+    category: 'News',
+    likes: 10
+  },
+  {
+    _id: ObjectId('6737292b34818faf667574d3'),
+    id: 0,
+    title: 'blog 2',
+    category: 'Food',
+    likes: 6
+  },
+  {
+    _id: ObjectId('6737292b34818faf667574d4'),
+    id: 1,
+    title: 'blog 3',
+    category: 'Paper',
+    likes: 7
+  }
+]
+Atlas atlas-yxzrg2-shard-0 [primary] test> db.posts.updateOne({title: 'blog 4'},{$set:{ title:'blog 4',category:'Event',likes:6}}, {upsert: true});
+{
+  acknowledged: true,
+  insertedId: ObjectId('67373737a02329c49c2d05f7'),
+  matchedCount: 0,
+  modifiedCount: 0,
+  upsertedCount: 1
+}
+Atlas atlas-yxzrg2-shard-0 [primary] test> db.posts.find();
+[
+  {
+    _id: ObjectId('67350241b510456840ded14b'),
+    id: 0,
+    title: 'blog 1',
+    category: 'News',
+    likes: 10
+  },
+  {
+    _id: ObjectId('6737292b34818faf667574d3'),
+    id: 0,
+    title: 'blog 2',
+    category: 'Food',
+    likes: 6
+  },
+  {
+    _id: ObjectId('6737292b34818faf667574d4'),
+    id: 1,
+    title: 'blog 3',
+    category: 'Paper',
+    likes: 7
+  },
+  {
+    _id: ObjectId('67373737a02329c49c2d05f7'),
+    title: 'blog 4',
+    category: 'Event',
+    likes: 6
+  }
+]
